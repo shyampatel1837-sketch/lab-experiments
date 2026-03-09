@@ -2,64 +2,150 @@
 <html>
 <head>
 <title>Student Result Dashboard</title>
+
 <style>
+
 body{
 font-family: Arial;
 text-align:center;
+background: linear-gradient(135deg,#74ebd5,#9face6);
+padding:20px;
+}
+
+h2{
+color:#333;
 }
 
 button{
 margin:5px;
-padding:10px;
+padding:10px 15px;
+cursor:pointer;
+border:none;
+border-radius:6px;
+background-color:#4CAF50;
+color:white;
+font-weight:bold;
+transition:0.3s;
 }
 
-#result{
-margin-top:20px;
-font-size:18px;
+button:hover{
+background-color:#2e8b57;
 }
+
+.fail{
+background-color:#e74c3c;
+}
+
+.fail:hover{
+background-color:#c0392b;
+}
+
+#searchBox{
+padding:10px;
+width:300px;
+border-radius:6px;
+border:1px solid gray;
+margin:15px;
+font-size:15px;
+}
+
+table{
+margin:20px auto;
+border-collapse: collapse;
+width:70%;
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+th, td{
+border:1px solid #ddd;
+padding:12px;
+text-align:center;
+}
+
+th{
+background-color:#4CAF50;
+color:white;
+}
+
+tr:nth-child(even){
+background-color:#f2f2f2;
+}
+
+tr:hover{
+background-color:#ddd;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<h1>Student Result Dashboard</h1>
+<h2>Student Result Dashboard</h2>
 
-<button onclick="showAll()">Show All Students</button>
+<input 
+type="text" 
+id="searchBox" 
+placeholder="Search by name, age, or marks..."
+onkeyup="searchStudents()"
+>
+
+<br>
+
+<button onclick="showAll()">All Students</button>
 <button onclick="above50()">Marks > 50</button>
 <button onclick="above60()">Marks > 60</button>
 <button onclick="above70()">Marks > 70</button>
 <button onclick="above80()">Marks > 80</button>
 <button onclick="above90()">Marks > 90</button>
-<button onclick="showTopper()">Show Topper</button>
-<button onclick="failedStudents()">Failed Students</button>
+<button onclick="showTopper()">Topper</button>
+<button class="fail" onclick="failedStudents()">Failed Students</button>
 
-<div id="result"></div>
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>Marks</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
 
 <script>
 
 let students = [
-{id:"101Z", name:"Rahul", Age:"20", marks:90, Department:"CSE"},
-{id:"105L", name:"Sita", Age:"24", marks:66, Department:"IT"},
-{id:"101J", name:"Rajnish", Age:"16", marks:91, Department:"CSE"},
-{id:"103T", name:"Atul", Age:"23", marks:42, Department:"ISE"},
-{id:"106F", name:"Sahil", Age:"20", marks:85, Department:"DS"},
-{id:"104H", name:"Gita", Age:"21", marks:79, Department:"CSE"},
-{id:"102X", name:"Ram", Age:"17", marks:99, Department:"DS"},
-{id:"108D", name:"Ritika", Age:"19", marks:54, Department:"IT"},
-{id:"109B", name:"Sohil", Age:"20", marks:63, Department:"AI"},
-{id:"107C", name:"Salman", Age:"22", marks:39, Department:"AI"},
-{id:"110A", name:"Sita", Age:"18", marks:43, Department:"CSE"},
-
+{name:"Rahul", age:20, marks:95},
+{name:"Anita", age:21, marks:82},
+{name:"Shyam", age:19, marks:67},
+{name:"Ravi", age:22, marks:45},
+{name:"Priya", age:20, marks:91},
+{name:"Amit", age:21, marks:55},
+{name:"Neha", age:20, marks:73}
 ];
 
 function display(list){
-let output = "";
+
+let table = "";
 
 list.forEach(function(student){
-output += student.name + " : " + student.marks + "<br>";
+
+table += `
+<tr>
+<td>${student.name}</td>
+<td>${student.age}</td>
+<td>${student.marks}</td>
+</tr>
+`;
+
 });
 
-document.getElementById("result").innerHTML = output;
+document.getElementById("tableBody").innerHTML = table;
+
 }
 
 function showAll(){
@@ -67,33 +153,33 @@ display(students);
 }
 
 function above50(){
-let filtered = students.filter(s => s.marks > 50);
-display(filtered);
+let result = students.filter(s => s.marks > 50);
+display(result);
 }
 
 function above60(){
-let filtered = students.filter(s => s.marks > 60);
-display(filtered);
+let result = students.filter(s => s.marks > 60);
+display(result);
 }
 
 function above70(){
-let filtered = students.filter(s => s.marks > 70);
-display(filtered);
+let result = students.filter(s => s.marks > 70);
+display(result);
 }
 
 function above80(){
-let filtered = students.filter(s => s.marks > 80);
-display(filtered);
+let result = students.filter(s => s.marks > 80);
+display(result);
 }
 
 function above90(){
-let filtered = students.filter(s => s.marks > 90);
-display(filtered);
+let result = students.filter(s => s.marks > 90);
+display(result);
 }
 
 function failedStudents(){
-let filtered = students.filter(s => s.marks < 50);
-display(filtered);
+let result = students.filter(s => s.marks < 50);
+display(result);
 }
 
 function showTopper(){
@@ -101,14 +187,36 @@ function showTopper(){
 let topper = students[0];
 
 students.forEach(function(student){
+
 if(student.marks > topper.marks){
 topper = student;
 }
+
 });
 
-document.getElementById("result").innerHTML =
-"Topper: " + topper.id + topper.name + topper.Age + topper.Department + " (" + topper.marks + ")";
+display([topper]);
+
 }
+
+function searchStudents(){
+
+let input = document.getElementById("searchBox").value.toLowerCase();
+
+let result = students.filter(function(student){
+
+return (
+student.name.toLowerCase().includes(input) ||
+student.age.toString().includes(input) ||
+student.marks.toString().includes(input)
+);
+
+});
+
+display(result);
+
+}
+
+showAll();
 
 </script>
 
