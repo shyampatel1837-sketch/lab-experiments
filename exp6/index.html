@@ -1,29 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Simple Form</title>
+<title>Student Result Dashboard</title>
+<style>
+body{
+font-family: Arial;
+text-align:center;
+}
+
+button{
+margin:5px;
+padding:10px;
+}
+
+#result{
+margin-top:20px;
+font-size:18px;
+}
+</style>
 </head>
+
 <body>
 
-<h2>Simple Registration Form</h2>
+<h1>Student Result Dashboard</h1>
 
-<form id="myForm">
-  Name: <br>
-  <input type="text" id="name"><br><br>
+<button onclick="showAll()">Show All Students</button>
+<button onclick="above50()">Marks > 50</button>
+<button onclick="above60()">Marks > 60</button>
+<button onclick="above70()">Marks > 70</button>
+<button onclick="above80()">Marks > 80</button>
+<button onclick="above90()">Marks > 90</button>
+<button onclick="showTopper()">Show Topper</button>
+<button onclick="failedStudents()">Failed Students</button>
 
-  Email: <br>
-  <input type="email" id="email"><br><br>
-
-  <button type="button" onclick="submitForm()">Submit</button>
-</form>
+<div id="result"></div>
 
 <script>
-function submitForm() {
-    var name = document.getElementById("name").value;
-    var email = document.getElementById("email").value;
 
-    alert("Name: " + name + "\nEmail: " + email);
+let students = [
+{id:"101Z", name:"Rahul", Age:"20", marks:90, Department:"CSE"},
+{id:"105L", name:"Sita", Age:"24", marks:66, Department:"IT"},
+{id:"101J", name:"Rajnish", Age:"16", marks:91, Department:"CSE"},
+{id:"103T", name:"Atul", Age:"23", marks:42, Department:"ISE"},
+{id:"106F", name:"Sahil", Age:"20", marks:85, Department:"DS"},
+{id:"104H", name:"Gita", Age:"21", marks:79, Department:"CSE"},
+{id:"102X", name:"Ram", Age:"17", marks:99, Department:"DS"},
+{id:"108D", name:"Ritika", Age:"19", marks:54, Department:"IT"},
+{id:"109B", name:"Sohil", Age:"20", marks:63, Department:"AI"},
+{id:"107C", name:"Salman", Age:"22", marks:39, Department:"AI"},
+{id:"110A", name:"Sita", Age:"18", marks:43, Department:"CSE"},
+
+];
+
+function display(list){
+let output = "";
+
+list.forEach(function(student){
+output += student.name + " : " + student.marks + "<br>";
+});
+
+document.getElementById("result").innerHTML = output;
 }
+
+function showAll(){
+display(students);
+}
+
+function above50(){
+let filtered = students.filter(s => s.marks > 50);
+display(filtered);
+}
+
+function above60(){
+let filtered = students.filter(s => s.marks > 60);
+display(filtered);
+}
+
+function above70(){
+let filtered = students.filter(s => s.marks > 70);
+display(filtered);
+}
+
+function above80(){
+let filtered = students.filter(s => s.marks > 80);
+display(filtered);
+}
+
+function above90(){
+let filtered = students.filter(s => s.marks > 90);
+display(filtered);
+}
+
+function failedStudents(){
+let filtered = students.filter(s => s.marks < 50);
+display(filtered);
+}
+
+function showTopper(){
+
+let topper = students[0];
+
+students.forEach(function(student){
+if(student.marks > topper.marks){
+topper = student;
+}
+});
+
+document.getElementById("result").innerHTML =
+"Topper: " + topper.id + topper.name + topper.Age + topper.Department + " (" + topper.marks + ")";
+}
+
 </script>
 
 </body>
