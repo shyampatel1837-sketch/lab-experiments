@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Result Dashboard</title>
+<title>Student Dashboard + Product Store</title>
 
 <style>
 
@@ -14,6 +14,7 @@ padding:20px;
 
 h2{
 color:#333;
+margin-top:40px;
 }
 
 button{
@@ -40,7 +41,7 @@ background-color:#e74c3c;
 background-color:#c0392b;
 }
 
-#searchBox{
+input{
 padding:10px;
 width:300px;
 border-radius:6px;
@@ -76,6 +77,11 @@ tr:hover{
 background-color:#ddd;
 }
 
+ul{
+list-style:none;
+padding:0;
+}
+
 </style>
 
 </head>
@@ -85,8 +91,8 @@ background-color:#ddd;
 <h2>Student Result Dashboard</h2>
 
 <input 
-type="text" 
-id="searchBox" 
+type="text"
+id="searchBox"
 placeholder="Search by name, age, or marks..."
 onkeyup="searchStudents()"
 >
@@ -116,7 +122,47 @@ onkeyup="searchStudents()"
 
 </table>
 
+
+<h2>Product Store</h2>
+
+<input
+type="text"
+id="productSearch"
+placeholder="Search product..."
+onkeyup="searchProducts()"
+>
+
+<br>
+
+<button onclick="showProducts()">All Products</button>
+<button onclick="rating4()">Rating > 4</button>
+<button onclick="rating45()">Rating > 4.5</button>
+<button onclick="price500()">Price < 500</button>
+<button onclick="price1000()">Price < 1000</button>
+
+<table>
+
+<thead>
+<tr>
+<th>Product</th>
+<th>Price</th>
+<th>Rating</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="productTable"></tbody>
+
+</table>
+
+<h3>Cart Items</h3>
+
+<ul id="cartList"></ul>
+
+
 <script>
+
+/* ------------------ STUDENT DASHBOARD ------------------ */
 
 let students = [
 {name:"Rahul", age:20, marks:95},
@@ -130,11 +176,11 @@ let students = [
 
 function display(list){
 
-let table = "";
+let table="";
 
 list.forEach(function(student){
 
-table += `
+table+=`
 <tr>
 <td>${student.name}</td>
 <td>${student.age}</td>
@@ -144,7 +190,7 @@ table += `
 
 });
 
-document.getElementById("tableBody").innerHTML = table;
+document.getElementById("tableBody").innerHTML=table;
 
 }
 
@@ -153,43 +199,37 @@ display(students);
 }
 
 function above50(){
-let result = students.filter(s => s.marks > 50);
-display(result);
+display(students.filter(s=>s.marks>50));
 }
 
 function above60(){
-let result = students.filter(s => s.marks > 60);
-display(result);
+display(students.filter(s=>s.marks>60));
 }
 
 function above70(){
-let result = students.filter(s => s.marks > 70);
-display(result);
+display(students.filter(s=>s.marks>70));
 }
 
 function above80(){
-let result = students.filter(s => s.marks > 80);
-display(result);
+display(students.filter(s=>s.marks>80));
 }
 
 function above90(){
-let result = students.filter(s => s.marks > 90);
-display(result);
+display(students.filter(s=>s.marks>90));
 }
 
 function failedStudents(){
-let result = students.filter(s => s.marks < 50);
-display(result);
+display(students.filter(s=>s.marks<50));
 }
 
 function showTopper(){
 
-let topper = students[0];
+let topper=students[0];
 
-students.forEach(function(student){
+students.forEach(function(s){
 
-if(student.marks > topper.marks){
-topper = student;
+if(s.marks>topper.marks){
+topper=s;
 }
 
 });
@@ -200,14 +240,14 @@ display([topper]);
 
 function searchStudents(){
 
-let input = document.getElementById("searchBox").value.toLowerCase();
+let input=document.getElementById("searchBox").value.toLowerCase();
 
-let result = students.filter(function(student){
+let result=students.filter(function(s){
 
-return (
-student.name.toLowerCase().includes(input) ||
-student.age.toString().includes(input) ||
-student.marks.toString().includes(input)
+return(
+s.name.toLowerCase().includes(input) ||
+s.age.toString().includes(input) ||
+s.marks.toString().includes(input)
 );
 
 });
@@ -217,6 +257,97 @@ display(result);
 }
 
 showAll();
+
+
+/* ------------------ PRODUCT STORE ------------------ */
+
+let products=[
+{name:"Wireless Mouse", price:400, rating:4.2},
+{name:"Keyboard", price:700, rating:4.6},
+{name:"Headphones", price:1200, rating:4.7},
+{name:"USB Cable", price:150, rating:4.1},
+{name:"Laptop Stand", price:900, rating:4.5},
+{name:"Bluetooth Speaker", price:2000, rating:4.8}
+];
+
+let cart=[];
+
+function displayProducts(list){
+
+let table="";
+
+list.forEach(function(p){
+
+table+=`
+<tr>
+<td>${p.name}</td>
+<td>${p.price}</td>
+<td>${p.rating}</td>
+<td>
+<button onclick="addToCart('${p.name}')">Add to Cart</button>
+</td>
+</tr>
+`;
+
+});
+
+document.getElementById("productTable").innerHTML=table;
+
+}
+
+function showProducts(){
+displayProducts(products);
+}
+
+function rating4(){
+displayProducts(products.filter(p=>p.rating>4));
+}
+
+function rating45(){
+displayProducts(products.filter(p=>p.rating>4.5));
+}
+
+function price500(){
+displayProducts(products.filter(p=>p.price<500));
+}
+
+function price1000(){
+displayProducts(products.filter(p=>p.price<1000));
+}
+
+function searchProducts(){
+
+let input=document.getElementById("productSearch").value.toLowerCase();
+
+let result=products.filter(function(p){
+
+return(
+p.name.toLowerCase().includes(input) ||
+p.price.toString().includes(input) ||
+p.rating.toString().includes(input)
+);
+
+});
+
+displayProducts(result);
+
+}
+
+function addToCart(product){
+
+cart.push(product);
+
+let list="";
+
+cart.forEach(function(item){
+list+=`<li>${item}</li>`;
+});
+
+document.getElementById("cartList").innerHTML=list;
+
+}
+
+showProducts();
 
 </script>
 
