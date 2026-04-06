@@ -1,354 +1,194 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Student Dashboard + Product Store</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
 
 <style>
 
-body{
-font-family: Arial;
-text-align:center;
-background: linear-gradient(135deg,#74ebd5,#9face6);
-padding:20px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-h2{
-color:#333;
-margin-top:40px;
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #10d6b2, #253b9b);
 }
 
-button{
-margin:5px;
-padding:10px 15px;
-cursor:pointer;
-border:none;
-border-radius:6px;
-background-color:#4CAF50;
-color:white;
-font-weight:bold;
-transition:0.3s;
+.container {
+    width: 420px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.288);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    color: #000;
 }
 
-button:hover{
-background-color:#2e8b57;
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.form-group {
+    margin-bottom: 15px;
 }
 
-.fail{
-background-color:#e74c3c;
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
 }
 
-.fail:hover{
-background-color:#c0392b;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.6);
+    transition: 0.3s;
 }
 
-input{
-padding:10px;
-width:300px;
-border-radius:6px;
-border:1px solid gray;
-margin:15px;
-font-size:15px;
+input:focus {
+    background: #fff;
+    box-shadow: 0 0 5px rgba(26, 1, 1, 0.3);
 }
 
-table{
-margin:20px auto;
-border-collapse: collapse;
-width:70%;
-background:white;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-th, td{
-border:1px solid #ddd;
-padding:12px;
-text-align:center;
+input[type="range"] {
+    flex: 1;
+    appearance: none;
+    height: 6px;
+    border-radius: 10px;
+    background: #333;
+    outline: none;
 }
 
-th{
-background-color:#4CAF50;
-color:white;
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: orange;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-tr:nth-child(even){
-background-color:#f2f2f2;
+.gender {
+    display: flex;
+    gap: 15px;
 }
 
-tr:hover{
-background-color:#ddd;
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(to right, rgb(216, 119, 119), #e75757);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-ul{
-list-style:none;
-padding:0;
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
+.container {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
 </style>
-
 </head>
 
 <body>
 
-<h2>Student Result Dashboard</h2>
+<div class="container">
+    <h2>Registration Form</h2>
 
-<input 
-type="text"
-id="searchBox"
-placeholder="Search by name, age, or marks..."
-onkeyup="searchStudents()"
->
+    <form id="form">
 
-<br>
+        <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" required>
+        </div>
 
-<button onclick="showAll()">All Students</button>
-<button onclick="above50()">Marks > 50</button>
-<button onclick="above60()">Marks > 60</button>
-<button onclick="above70()">Marks > 70</button>
-<button onclick="above80()">Marks > 80</button>
-<button onclick="above90()">Marks > 90</button>
-<button onclick="showTopper()">Topper</button>
-<button class="fail" onclick="failedStudents()">Failed Students</button>
+        <div class="form-group">
+            <label>Age *</label>
+            <div class="slider-container">
+                <input type="range" id="age" min="10" max="60" value="18">
+                <span id="ageValue">18</span>
+            </div>
+        </div>
 
-<table>
+        <div class="form-group">
+            <label>Email *</label>
+            <input type="email" required>
+        </div>
 
-<thead>
-<tr>
-<th>Name</th>
-<th>Age</th>
-<th>Marks</th>
-</tr>
-</thead>
+        <div class="form-group">
+            <label>Password *</label>
+            <input type="password" required>
+        </div>
 
-<tbody id="tableBody"></tbody>
+        <div class="form-group">
+            <label>Telephone *</label>
+            <input type="tel" required>
+        </div>
 
-</table>
+        <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="date">
+        </div>
 
+        <div class="form-group">
+            <label>Gender *</label>
+            <div class="gender">
+                <label><input type="radio" name="gender"> Male</label>
+                <label><input type="radio" name="gender"> Female</label>
+            </div>
+        </div>
 
-<h2>Product Store</h2>
-
-<input
-type="text"
-id="productSearch"
-placeholder="Search product..."
-onkeyup="searchProducts()"
->
-
-<br>
-
-<button onclick="showProducts()">All Products</button>
-<button onclick="rating4()">Rating > 4</button>
-<button onclick="rating45()">Rating > 4.5</button>
-<button onclick="price500()">Price < 500</button>
-<button onclick="price1000()">Price < 1000</button>
-
-<table>
-
-<thead>
-<tr>
-<th>Product</th>
-<th>Price</th>
-<th>Rating</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody id="productTable"></tbody>
-
-</table>
-
-<h3>Cart Items</h3>
-
-<ul id="cartList"></ul>
-
+        <button type="submit">Submit</button>
+    </form>
+</div>
 
 <script>
+const ageSlider = document.getElementById("age");
+const ageValue = document.getElementById("ageValue");
 
+ageSlider.oninput = () => {
+    ageValue.textContent = ageSlider.value;
+};
 
+document.getElementById("form").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-let students = [
-{name:"Rahul", age:20, marks:95},
-{name:"Anita", age:21, marks:82},
-{name:"Shyam", age:19, marks:67},
-{name:"Ravi", age:22, marks:45},
-{name:"Priya", age:20, marks:91},
-{name:"Amit", age:21, marks:55},
-{name:"Neha", age:20, marks:73}
-];
-
-function display(list){
-
-let table="";
-
-list.forEach(function(student){
-
-table+=`
-<tr>
-<td>${student.name}</td>
-<td>${student.age}</td>
-<td>${student.marks}</td>
-</tr>
-`;
-
+    alert("Form Submitted Successfully!");
 });
-
-document.getElementById("tableBody").innerHTML=table;
-
-}
-
-function showAll(){
-display(students);
-}
-
-function above50(){
-display(students.filter(s=>s.marks>50));
-}
-
-function above60(){
-display(students.filter(s=>s.marks>60));
-}
-
-function above70(){
-display(students.filter(s=>s.marks>70));
-}
-
-function above80(){
-display(students.filter(s=>s.marks>80));
-}
-
-function above90(){
-display(students.filter(s=>s.marks>90));
-}
-
-function failedStudents(){
-display(students.filter(s=>s.marks<50));
-}
-
-function showTopper(){
-
-let topper=students[0];
-
-students.forEach(function(s){
-
-if(s.marks>topper.marks){
-topper=s;
-}
-
-});
-
-display([topper]);
-
-}
-
-function searchStudents(){
-
-let input=document.getElementById("searchBox").value.toLowerCase();
-
-let result=students.filter(function(s){
-
-return(
-s.name.toLowerCase().includes(input) ||
-s.age.toString().includes(input) ||
-s.marks.toString().includes(input)
-);
-
-});
-
-display(result);
-
-}
-
-showAll();
-
-
-
-
-let products=[
-{name:"Wireless Mouse", price:400, rating:4.2},
-{name:"Keyboard", price:700, rating:4.6},
-{name:"Headphones", price:1200, rating:4.7},
-{name:"USB Cable", price:150, rating:4.1},
-{name:"Laptop Stand", price:900, rating:4.5},
-{name:"Bluetooth Speaker", price:2000, rating:4.8}
-];
-
-let cart=[];
-
-function displayProducts(list){
-
-let table="";
-
-list.forEach(function(p){
-
-table+=`
-<tr>
-<td>${p.name}</td>
-<td>${p.price}</td>
-<td>${p.rating}</td>
-<td>
-<button onclick="addToCart('${p.name}')">Add to Cart</button>
-</td>
-</tr>
-`;
-
-});
-
-document.getElementById("productTable").innerHTML=table;
-
-}
-
-function showProducts(){
-displayProducts(products);
-}
-
-function rating4(){
-displayProducts(products.filter(p=>p.rating>4));
-}
-
-function rating45(){
-displayProducts(products.filter(p=>p.rating>4.5));
-}
-
-function price500(){
-displayProducts(products.filter(p=>p.price<500));
-}
-
-function price1000(){
-displayProducts(products.filter(p=>p.price<1000));
-}
-
-function searchProducts(){
-
-let input=document.getElementById("productSearch").value.toLowerCase();
-
-let result=products.filter(function(p){
-
-return(
-p.name.toLowerCase().includes(input) ||
-p.price.toString().includes(input) ||
-p.rating.toString().includes(input)
-);
-
-});
-
-displayProducts(result);
-
-}
-
-function addToCart(product){
-
-cart.push(product);
-
-let list="";
-
-cart.forEach(function(item){
-list+=`<li>${item}</li>`;
-});
-
-document.getElementById("cartList").innerHTML=list;
-
-}
-
-showProducts();
-
 </script>
 
 </body>
