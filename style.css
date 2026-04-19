@@ -105,6 +105,9 @@ body {
     padding:30px;
     transition:0.3s;
     box-shadow:0 10px 25px rgba(0,0,0,0.4);
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .php-card img{
