@@ -108,6 +108,7 @@ body {
     text-decoration: none;
     color: inherit;
     display: block;
+    text-align:center;
 }
 
 .php-card img{
@@ -130,4 +131,16 @@ body {
 
 .large{
     grid-column: span 1;
+}
+
+.calc-img-top{
+  width:220px;
+  display:block;
+  margin:0 auto 20px auto;
+}
+
+.calc-img-bottom{
+  width:220px;
+  display:block;
+  margin:0 auto 20px auto;
 }
