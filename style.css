@@ -144,37 +144,29 @@ body {
   display:block;
   margin:0 auto 20px auto;
 }
-
-/* final project  */
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #0a0a0a;
-  font-family: Arial, sans-serif;
-}
-
-
+/* project */
 .project-card {
   position: relative;
   width: 320px;
   height: 180px;
-  background: #0f0f0f;
-  border-radius: 20px;
+  margin: 60px auto; /* centers horizontally + spacing from above content */
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+
+  background: #0f0f0f;
+  border-radius: 20px;
   text-align: center;
+  color: #fff;
   cursor: pointer;
   overflow: hidden;
-  z-index: 1;
-  transition: 0.3s ease;
+
+  transition: all 0.4s ease;
 }
 
+/* Animated Gradient Border */
 .project-card::before {
   content: "";
   position: absolute;
@@ -183,9 +175,10 @@ body {
   background: linear-gradient(45deg, #00f0ff, #ff00ff, #00ff88, #00f0ff);
   background-size: 300% 300%;
   z-index: -1;
-  animation: borderGlow 6s linear infinite;
+  animation: glowMove 6s linear infinite;
 }
 
+/* Inner dark layer */
 .project-card::after {
   content: "";
   position: absolute;
@@ -195,34 +188,40 @@ body {
   z-index: -1;
 }
 
+/* Text */
 .project-card h2 {
-  margin: 0;
   font-size: 28px;
-  font-weight: bold;
+  margin: 0;
 }
 
 .project-card p {
+  font-size: 15px;
+  color: #aaa;
   margin-top: 10px;
-  font-size: 16px;
-  color: #bbb;
+  padding: 0 10px;
 }
 
-@keyframes borderGlow {
+/* Glow Animation */
+@keyframes glowMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
+/* ADVANCED HOVER */
 .project-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 0 25px rgba(0,255,255,0.2),
+              0 0 50px rgba(255,0,255,0.15);
 }
 
 .project-card:hover::before {
-  filter: blur(8px);
+  filter: blur(10px);
 }
 
+/* Text glow on hover */
 .project-card:hover h2 {
-  text-shadow: 0 0 10px #00f0ff, 0 0 20px #ff00ff;
+  text-shadow: 0 0 10px #00f0ff, 0 0 25px #ff00ff;
 }
 
 .project-card:hover p {
