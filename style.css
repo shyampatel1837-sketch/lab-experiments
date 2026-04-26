@@ -147,8 +147,8 @@ body {
 /* project */
 .project-card {
   position: relative;
-  width: 320px;
-  height: 180px;
+  width: 640px;
+  height: 360px;
   margin: 60px auto; /* centers horizontally + spacing from above content */
   
   display: flex;
